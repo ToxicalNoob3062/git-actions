@@ -2,7 +2,7 @@ name: 01-building-blocks
 on: 
     push:
         branches:
-            - main
+            - feature
     workflow_dispatch:
 jobs:
     echo-hello:
