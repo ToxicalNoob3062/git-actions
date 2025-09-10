@@ -5,8 +5,6 @@ on:
             - main
     pull_request:
     workflow_dispatch:
-    schedule:
-        - cron: '*/6 * * * *'  # every 6 minutes
 jobs:
     echo-event-name:
         runs-on: ubuntu-latest
