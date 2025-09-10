@@ -1,0 +1,16 @@
+name: 02-workflow-events
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+    workflow_dispatch:
+    schedule:
+        - cron: '*/2 * * * *'  # every 2 minutes
+jobs:
+    echo-event-name:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Echo Event Name
+              # also include current time for better visibility
+              run: echo "Event name is ${{ github.event_name }} at $(date)"
