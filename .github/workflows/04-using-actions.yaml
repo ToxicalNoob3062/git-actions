@@ -1,10 +1,8 @@
 name: 04 - Using Actions
-
 on:
   push:
     branches:
       - main
-
 jobs:
   build:
     runs-on: macos-latest
@@ -12,18 +10,15 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Printing Folders
-        run: |
-          echo "Folder structure:"
-          ls -R
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 'latest'
 
-      # - name: Set up Bun
-      #   uses: oven-sh/setup-bun@v2
-      #   with:
-      #     bun-version: 'latest'
+      - name: Install Dependencies
+        run: bun install
+        working-directory: ./04-using-actions
 
-      # - name: Install Dependencies
-      #   run: bun install
-
-      # - name: Run Tests
-      #   run: bun test
+      - name: Run Tests
+        run: bun test
+        working-directory: ./04-using-actions
