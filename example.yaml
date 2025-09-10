@@ -1,0 +1,15 @@
+name: Rahat
+age: 30
+hobbies:
+  - reading
+  - hiking
+  - coding
+address:
+  permanent:
+    street: 123 Main St
+    city: Springfield
+    zip: 12345
+  temporary:
+    street: 456 Elm St
+    city: Shelbyville
+    zip: 67890
