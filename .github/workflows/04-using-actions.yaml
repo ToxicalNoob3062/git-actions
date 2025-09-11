@@ -32,3 +32,4 @@ jobs:
         if: ${{ success() }}
         run: |
           kill $(cat bun.pid)
+        working-directory: ./04-using-actions
