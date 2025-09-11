@@ -26,3 +26,19 @@
           OVERWRITTEN_VAR: "I am overwritten by step"
         run: |
           echo "Overwritten Variable: $OVERWRITTEN_VAR"
+    echo-staging:
+        runs-on: ubuntu-latest
+        environment: staging
+        steps: 
+          - name: "Print Respository And Staging Env Variables"
+            run: |
+              echo "Repository Variable: ${{ vars.OVERWRITE_VAR }}"
+              echo "Staging Environment Variable: ${{ vars.TARGET_VAR }}"
+    echo-production:
+        runs-on: ubuntu-latest
+        environment: prod
+        steps: 
+          - name: "Print Respository And Production Env Variables"
+            run: |
+              echo "Repository Variable: ${{ vars.OVERWRITE_VAR }}"
+              echo "Production Environment Variable: ${{ vars.TARGET_VAR }}"
