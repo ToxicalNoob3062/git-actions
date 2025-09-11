@@ -4,21 +4,33 @@ on:
     branches:
       - main
 jobs:
-  build:
-    runs-on: macos-latest
+  test:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Set up Bun
-        uses: oven-sh/setup-bun@v2
+      - uses: actions/checkout@v4
+      
+      - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 'latest'
+          bun-version: latest
+      
+      - run: bun install
 
-      - name: Install Dependencies
-        run: bun install
-        working-directory: ./04-using-actions
+      - name: Start bun dev in background
+        run: |
+          bun dev &             # Run bun dev in background
+          echo $! > bun.pid     # Save its PID
+      
+      - name: Wait for bun dev to be ready
+        run: |
+          # Example: simple sleep for 5 seconds
+          sleep 3
+          # Or use curl/wait-on to poll and confirm readiness
 
-      - name: Run Tests
+      - name: Run tests
         run: bun test
-        working-directory: ./04-using-actions
+        continue-on-error: false  # fail workflow if tests fail
+
+      - name: Kill bun dev background process
+        if: ${{ success() }}
+        run: |
+          kill $(cat bun.pid)
