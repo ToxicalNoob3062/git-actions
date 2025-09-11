@@ -1,0 +1,16 @@
+name: 06-Contexts
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  echo-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo GitHub Context
+        run: |
+          echo "GitHub Context:"
+          echo "${{ toJson(github) }}"
+      - name: Echo Repository Variable MY_VAR
+        run: |
+          echo "Repository Variable MY_VAR:"
+          echo "${{ vars.MY_VAR }}"
