@@ -14,21 +14,19 @@ jobs:
           bun-version: latest
       
       - run: bun install
+        working-directory: ./04-using-actions
 
       - name: Start bun dev in background
         run: |
           bun dev &             # Run bun dev in background
           echo $! > bun.pid     # Save its PID
-      
-      - name: Wait for bun dev to be ready
-        run: |
-          # Example: simple sleep for 5 seconds
-          sleep 3
-          # Or use curl/wait-on to poll and confirm readiness
-
+        working-directory: ./04-using-actions
       - name: Run tests
-        run: bun test
+        run: |
+          sleep 3
+          bun test
         continue-on-error: false  # fail workflow if tests fail
+        working-directory: ./04-using-actions
 
       - name: Kill bun dev background process
         if: ${{ success() }}
