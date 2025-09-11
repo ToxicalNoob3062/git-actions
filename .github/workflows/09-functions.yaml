@@ -6,6 +6,15 @@ jobs:
   echo-1:
     runs-on: ubuntu-latest
     steps:
+      - name: Print Pr Title
+        run: echo "The PR title is ${{ github.event.pull_request.title }}"
+
+      - name: Print Pr Labels
+        run: echo "The PR labels are ${{ toJson(github.event.pull_request.labels) }}"
+
+      - name: Bug Step
+        run: echo "I am a bug fix."
+        if: ${{ failure() && !cancelled() && contains(github.event.pull_request.title,'fix') }}
       - name: Sleep for 20 seconds
         run: sleep 20
       - name: Failing step
@@ -18,7 +27,7 @@ jobs:
         if: ${{ failure() }}
       - name: I will execute
         run: echo "I will always print except when the workflow is cancelled"
-        if: ${{ always() && !cancelled() }}
+        if: ${{!cancelled() }}
       - name: "I will execute when the workflow is cancelled"
         run: echo "This step runs only when the workflow is cancelled"
         if: ${{ cancelled() }}
