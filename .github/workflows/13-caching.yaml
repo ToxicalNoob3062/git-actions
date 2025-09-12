@@ -6,6 +6,14 @@ on:
         description: 'Whether to use cache or not'
         type: boolean
         default: true
+      bun_version:
+        description: 'Bun version to use'
+        type: choice
+        options:
+          - latest
+          - v2
+          - v1
+        default: latest
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,8 +26,16 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          bun-version: ${{ inputs.bun_version }}
+      - name: Download cached dependencies
+        id: cache
+        if: ${{ inputs.use-cache }}
+        uses: actions/cache@v3
+        with:
+          path: ./04-using-actions/node_modules
+          key: bun-deps-${{ hashFiles('./04-using-actions/bun.lockb') }}
       - name: Install deps
+        if: steps.cache.outputs.cache-hit != 'true'
         run: bun install
       - name: Start bun dev in background
         run: |
