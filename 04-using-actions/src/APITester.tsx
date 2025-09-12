@@ -1,6 +1,7 @@
 import { useRef, type FormEvent } from "react";
 
-export function APITester() {
+export function APITester(props?: { dummy?: boolean }) {
+  if (props?.dummy) return true
   const responseInputRef = useRef<HTMLTextAreaElement>(null);
 
   const testEndpoint = async (e: FormEvent<HTMLFormElement>) => {

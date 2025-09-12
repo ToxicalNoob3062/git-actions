@@ -1,6 +1,8 @@
 import { expect, test } from "bun:test";
+import { APITester } from "./APITester";
 
 test("unit-test", async () => {
+  expect(APITester({ dummy: true })).toBe(true);
   const result = await Promise.resolve(2 * 2);
   expect(result).toEqual(4);
 });
