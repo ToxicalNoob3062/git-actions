@@ -6,20 +6,34 @@ jobs:
     name: ${{ matrix.os }}-${{ matrix.node-version }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         node-version: [18.x, 20.x, 21.x]
         os:
           - ubuntu-latest
-          - windows-latest  
+          - windows-latest
+        include:
+        - node-version: 16.x
+          os: ubuntu-latest
+        - node-version: 21.x
+          os: ubuntu-latest
+          tag: experimental
     steps:
     - name: Setup Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v5
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Fail if experimental tag is found
+      if: ${{ matrix.tag == 'experimental' }}
+      run: |
+        echo "This is an experimental tag. Failing the job."
+        exit 1
     - name: Performing some dummy tests
       run: |
-        node -v
-        npm -v
+        sleep 10
         echo "Running tests on ${{ matrix.os }} with Node.js version ${{ matrix.node-version }}"
+    - name: Upload test results
+      run: echo "Uploading test results..."
 
-        
+
+
