@@ -1,0 +1,40 @@
+name: 17-01 - Using Custom Actions
+run-name: ${{ inputs.target_env }} 17-01 - Using Custom Actions
+env:
+  working-directory: ./04-using-actions
+on:
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: 'is dev environment ?'
+        type: boolean
+        default: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.working-directory }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Cache bun and node deps
+        uses: ./.github/actions/composite-cache-deps
+        with:
+          bun-version: latest
+          working-directory: ${{ env.working-directory }}
+          target_env: ${{ inputs.target_env }}
+      - name: Start bun dev in background
+        run: |
+          bun dev &             # Run bun dev in background
+          echo $! > bun.pid     # Save its PID
+      - name: Testing
+        run: |
+          sleep 2
+          bun test
+      - name: Kill bun dev background process
+        if: ${{ success() }}
+        run: |
+          kill $(cat bun.pid)
+      - name: Building
+        run: bun run build

@@ -9,6 +9,10 @@ inputs:
     description: 'Working directory where bun.lockb and node_modules are located'
     required: false
     default: '.'
+  target_env:
+    description: 'is dev environment ?'
+    required: false
+    default: 'false'
 runs:
   using: composite
   steps:
@@ -21,9 +25,9 @@ runs:
       uses: actions/cache@v4
       with:
         path: ${{ inputs.working-directory }}/node_modules
-        key:  node_modules-${{hashFiles('${{ inputs.working-directory }}/bun.lockb')}}}
+        key:  node_modules-${{hashFiles(format('{0}/bun.lockb', inputs.working-directory))}}
     - name: Install dependencies if cache miss
       if: steps.cache.outputs.cache-hit != 'true'
-      run: bun install --frozen-lockfile
+      run: ${{ inputs.target_env == 'true' && bun install --frozen-lockfile || bun install --omit=dev }}
       working-directory: ${{ inputs.working-directory }}
       shell: bash
