@@ -1,0 +1,17 @@
+name: 16 - Working with Environments
+on:
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: 'Select the target environment'
+        type: environment
+        default: staging
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    env: 
+      MY_ENV_VAR: ${{ secrets.MY_VAR || 'hello world!' }}
+    environment: ${{ inputs.target_env }}
+    steps:
+      - name: Print Environment Variable
+        run: echo "The value of MY_ENV_VAR is - ${{ env.MY_ENV_VAR }}"
