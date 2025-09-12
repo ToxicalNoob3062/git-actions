@@ -1,0 +1,11 @@
+name: 17-02 - Using Custom JS Actions
+on:
+ - workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Update JS dependencies
+        uses: ./.github/actions/js-deps-update

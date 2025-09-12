@@ -1,0 +1,5 @@
+name: Update JS dependencies
+description: Update JavaScript dependencies using npm-check-updates and create a pull request with updated package*.json files.
+runs:
+  using: node20
+  main: dist/index.js

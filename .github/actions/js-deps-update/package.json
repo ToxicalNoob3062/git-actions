@@ -1,0 +1,10 @@
+{
+  "name": "js-deps-update",
+  "module": "index.js",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@actions/core": "v1",
+    "@vercel/ncc": "^0.38.3"
+  }
+}
