@@ -1,0 +1,39 @@
+name: 13 - Using Cache
+on:
+  workflow_dispatch:
+    inputs:
+      use-cache:
+        description: 'Whether to use cache or not'
+        type: boolean
+        default: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./04-using-actions
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install deps
+        run: bun install
+      - name: Start bun dev in background
+        run: |
+          bun dev &             # Run bun dev in background
+          echo $! > bun.pid     # Save its PID
+      - name: Testing
+        run: |
+          sleep 2
+          bun test
+      - name: Kill bun dev background process
+        if: ${{ success() }}
+        run: |
+          kill $(cat bun.pid)
+      - name: Building
+        run: bun run build
+      - name: Deploying to non prod
+        run: echo "Deploying to non-prod environment"
