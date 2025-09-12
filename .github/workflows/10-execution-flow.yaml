@@ -1,4 +1,4 @@
-name: Controlling the execution flow
+name: 10 - Controlling the execution flow
 on:
   workflow_dispatch:
     inputs:
