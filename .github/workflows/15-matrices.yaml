@@ -34,6 +34,22 @@ jobs:
         echo "Running tests on ${{ matrix.os }} with Node.js version ${{ matrix.node-version }}"
     - name: Upload test results
       run: echo "Uploading test results..."
+  include-example:
+    name: ${{ matrix.color }}-${{ matrix.shape }}-${{ matrix.size }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        color: [red, green]
+        shape: [circle, square]
+        size: [small, large]
+        include:
+          - color: red
+            shape: triangle
+    steps:
+      - name: Display combination
+        run: |
+          echo "Color: ${{ matrix.color }}, Shape: ${{ matrix.shape }}, Size: ${{ matrix.size }}"
+
 
 
 
