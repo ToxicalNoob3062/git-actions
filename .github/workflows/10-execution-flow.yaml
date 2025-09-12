@@ -20,7 +20,7 @@ jobs:
     - name: Run Unit Tests
       run: echo "Running tests..."
     - name: Failing Tests
-      if: ${{ github.event.inputs.pass_unit_tests == false }}
+      if: ${{ !inputs.pass_unit_tests }}
       run: exit 1
   deploy_non-prod:
     runs-on: ubuntu-latest
