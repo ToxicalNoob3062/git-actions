@@ -25,7 +25,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: ${{ inputs.working-directory }}/node_modules
-        key:  node_modules-${{hashFiles(format('{0}/bun.lock', inputs.working-directory))}}
+        key:  node_modules-${{ inputs.target_env  }}-${{hashFiles(format('{0}/bun.lock', inputs.working-directory))}}
     - name: Install dependencies if cache miss
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
