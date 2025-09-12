@@ -23,15 +23,13 @@ jobs:
       uses: actions/setup-node@v5
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Fail if experimental tag is found
-      if: ${{ matrix.tag == 'experimental' }}
-      run: |
-        echo "This is an experimental tag. Failing the job."
-        exit 1
+    # - name: Fail if experimental tag is found
+    #   if: ${{ matrix.tag == 'experimental' }}
+    #   run: |
+    #     echo "This is an experimental tag. Failing the job."
+    #     exit 1
     - name: Performing some dummy tests
-      run: |
-        sleep 10
-        echo "Running tests on ${{ matrix.os }} with Node.js version ${{ matrix.node-version }}"
+      run: echo "Running tests on ${{ matrix.os }} with Node.js version ${{ matrix.node-version }}"
     - name: Upload test results
       run: echo "Uploading test results..."
   include-example:
