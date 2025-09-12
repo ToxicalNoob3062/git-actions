@@ -6,5 +6,8 @@
   "dependencies": {
     "@actions/core": "v1",
     "@vercel/ncc": "^0.38.3"
+  },
+  "scripts": {
+    "build": "bunx ncc build index.js -o dist"
   }
 }
