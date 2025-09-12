@@ -53,6 +53,9 @@ jobs:
           - color: green
             shape: circle
             size: medium
+        exclude: # executed before the include
+            - color: green
+              shape: circle
     steps:
       - name: Display combination
         run: |
